@@ -1,2 +1,2 @@
 # TeamsCloudCommunicationApi
-PowerShell module that uses Teams Cloud Communications Graph API to perform actions
+PowerShell module that uses Cloud Communications Graph API calls to manage and to report on Microsoft Teams.
