@@ -73,3 +73,141 @@ function Get-GraphApiAccessToken {
         Write-Warning -Message "No credentials found, exiting command."
     }
 } # End of Get-GraphApiAccessToken
+
+function Get-TeamsPstnCalls {
+    <#
+        .SYNOPSIS
+        Retrieves PSTN calls between a specified start and end date.
+
+        .DESCRIPTION
+        Uses Teams cloud communications Graph API call to retrieve PSTN usage data.
+        Requires an Azure application registration with CallRecords.Read.PstnCalls permissions and Graph API access token.
+
+        .OUTPUTS
+
+        .PARAMETER StartDate
+        The start date to search for records in YYYY-MM-DD format.
+
+        .PARAMETER EndDate
+        The end date to search for records in YYYY-MM-DD format.
+
+        .PARAMETER AccessToken
+        An access token for authorization to make Graph API requests.
+        Recommended to save this value to a variable for resuse.
+
+        .EXAMPLE
+        Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-03-31 -AccessToken $accessToken
+
+        This example retrieves PSTN usage records between 2020-03-01 and 2020-03-31 use an access toke
+        saved to the variable $accessToken.
+
+        .LINK
+        https://docs.microsoft.com/en-us/graph/api/callrecords-callrecord-getpstncalls
+
+        .NOTES
+        The max duration between the StartDate and EndDate is 90 days.
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, HelpMessage="Start date to search for call records in YYYY-MM-DD format")]
+        [string]
+        $StartDate,
+
+        [Parameter(Mandatory, HelpMessage="End date to search for call records in YYYY-MM-DD format")]
+        [string]
+        $EndDate,
+
+        [Parameter(Mandatory, HelpMessage="Access token string for authorization to make Graph API calls")]
+        [string]
+        $AccessToken
+    )
+
+    $headers = @{
+        "Authorization" = $AccessToken
+        "Content-type" = "application/json"
+    }
+    $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+    
+    while (-not ([string]::IsNullOrEmpty($requestUri))) {
+        $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers
+
+        $requestResponse.value
+
+        if ($requestResponse.'@odata.NextLink') {
+            $requestUri = $requestResponse.'@odata.NextLink'
+        }
+        else {
+            $requestUri = $null
+        }
+    }
+}
+
+function Get-TeamsDirectRoutingCalls {
+    <#
+        .SYNOPSIS
+        Retrieves direct routing calls between a specified start and end date.
+
+        .DESCRIPTION
+        Uses Teams cloud communications Graph API call to retrieve direct routing usage data.
+        Requires an Azure application registration with CallRecords.Read.PstnCalls permissions and Graph API access token.
+
+        .OUTPUTS
+
+        .PARAMETER StartDate
+        The start date to search for records in YYYY-MM-DD format.
+
+        .PARAMETER EndDate
+        The end date to search for records in YYYY-MM-DD format.
+
+        .PARAMETER AccessToken
+        An access token for authorization to make Graph API requests.
+        Recommended to save this value to a variable for resuse.
+
+        .EXAMPLE
+        Get-TeamsDirectRoutingCalls -StartDate 2020-03-01 -EndDate 2020-03-31 -AccessToken $accessToken
+
+        This example retrieves direct routing usage records between 2020-03-01 and 2020-03-31 use an access toke
+        saved to the variable $accessToken.
+
+        .LINK
+        https://docs.microsoft.com/en-us/graph/api/callrecords-callrecord-getdirectroutingcalls
+
+        .NOTES
+        The max duration between the StartDate and EndDate is 90 days.
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, HelpMessage="Start date to search for call records in YYYY-MM-DD format")]
+        [string]
+        $StartDate,
+
+        [Parameter(Mandatory, HelpMessage="End date to search for call records in YYYY-MM-DD format")]
+        [string]
+        $EndDate,
+
+        [Parameter(Mandatory, HelpMessage="Access token string for authorization to make Graph API calls")]
+        [string]
+        $AccessToken
+    )
+
+    $headers = @{
+        "Authorization" = $AccessToken
+        "Content-type" = "application/json"
+    }
+    $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+    
+    while (-not ([string]::IsNullOrEmpty($requestUri))) {
+        $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers
+
+        $requestResponse.value
+
+        if ($requestResponse.'@odata.NextLink') {
+            $requestUri = $requestResponse.'@odata.NextLink'
+        }
+        else {
+            $requestUri = $null
+        }
+    }
+}
