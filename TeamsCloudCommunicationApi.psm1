@@ -125,12 +125,16 @@ function Get-TeamsPstnCalls {
 
     $headers = @{
         "Authorization" = $AccessToken
-        "Content-type" = "application/json"
     }
     $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     
     while (-not ([string]::IsNullOrEmpty($requestUri))) {
-        $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers
+        try {
+            $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers -ErrorAction STOP
+        }
+        catch {
+            $_
+        }
 
         $requestResponse.value
 
@@ -194,12 +198,16 @@ function Get-TeamsDirectRoutingCalls {
 
     $headers = @{
         "Authorization" = $AccessToken
-        "Content-type" = "application/json"
     }
     $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     
     while (-not ([string]::IsNullOrEmpty($requestUri))) {
-        $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers
+        try {
+            $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers -ErrorAction STOP
+        }
+        catch {
+            $_
+        }
 
         $requestResponse.value
 
