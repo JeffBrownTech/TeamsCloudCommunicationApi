@@ -6,15 +6,15 @@ PowerShell module that uses Cloud Communications Graph API calls to manage and t
 *Disclaimer: Use of this code does not come with any support and is provided 'as-is'. Use at your own risk and review the code and test prior to use in production. This module uses the beta version of the Graph API, which is subject to change without notice from Microsoft.*
 
 # Getting Started
-This module requires an Azure application registration in order to authenticate against the Graph API. This application registration requires Application permissions of **CallRecords.Read.PstnCalls**. To read more about creating an Azure application registration, creating a client secret, and assigning permissions, check out my blog posts with references for additional reading:
+This module requires an Azure application registration in order to authenticate against the Graph API. This application registration requires Application permissions of **CallRecords.Read.PstnCalls**. Here is an example of what the application registration permissions should look like:
+
+![App registration permissions](https://jeffbrown.tech/wp-content/uploads/2020/08/AzureAppRegistrationPermissions.png)
+
+To read more about creating an Azure application registration, creating a client secret, and assigning permissions, check out my blog posts with references for additional reading:
 
 [Getting Started with Microsoft Teams and Graph API](https://jeffbrown.tech/getting-started-with-microsoft-teams-and-graph-api/)
 
 [Creating Microsoft Teams and Channels with Graph API and PowerShell](https://jeffbrown.tech/creating-microsoft-teams-and-channels-with-graph-api-and-powershell/)
-
-Here is an example of what the application registration permissions should look like:
-
-![App registration permissions](https://jeffbrown.tech/wp-content/uploads/2020/08/AzureAppRegistrationPermissions.png)
 
 # Importing the Module
 After downloading the files in this repository, you can import the module for use in a PowerShell console by importing the .PSD1 file:
@@ -30,14 +30,14 @@ Get-Command -Module TeamsCloudCommunicationApi
 ```
 
 # Graph API Access Tokens
-Part of using the Graph API is authenticating to the service to ensure you or your program can access and execute specific tasks. Includes in this module is a function named **Get-GraphApiAccessToken**. This command takes two inputs: a PSCredential object and the Azure tenant ID. If you don't provide PSCredentials, the function will prompt for it.
+Part of using the Graph API is authenticating to the service to ensure you or your program can access and execute specific tasks. Included in this module is a function named **Get-GraphApiAccessToken**. This command takes two inputs: a PSCredential object and the Azure tenant ID. If you don't provide PSCredentials, the function will prompt for them.
 
 The PSCredential object will use the application/client ID from the previous section as the user name, and the client secret will be the password. I suggest saving the output of this command to a variable to use in the remaining module functions.
 
 Here is an example of saving the application/client ID and client secret to a variable, then using it when calling the function:
 
 ```powershell
-$graphApiAppCreds = Get-Credential
+$graphApiCreds = Get-Credential
 ```
 
 ![Saving credentials to a variable](https://jeffbrown.tech/wp-content/uploads/2020/08/SavingGraphApiCredsToVariable.png)
@@ -46,7 +46,7 @@ Use this as the value for the *-Credential* parameter along with the tenant ID t
 
 ![Getting access token](https://jeffbrown.tech/wp-content/uploads/2020/08/GettingAccessToken.png)
 
-As you can see, the value for the access token is a very long string, hence the suggestion to save to a variable. This access token is good for 1 hour or 3600 seconds. When this token expires, for now, use this same command again to generate a new one.
+As you can see, the value for the access token is a very long string, hence the suggestion to save to a variable. This access token is good for 1 hour or 3600 seconds. When this token expires, use this same command again to generate a new one.
 
 # Getting Teams Call Usage Records
 The Teams admin center has a report the displays all the call records made in the tenant. This report is incredibly useful for tracking costs of calls from communications credit usage, toll-free numbers, and audio conferencing dial-out. Prior to now there has not been a programmatic way of extracting these records, and admins have relied on exporting data manually from the admin center.
@@ -91,3 +91,7 @@ Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $acces
 
 ![Using Where-Object to filter results](https://jeffbrown.tech/wp-content/uploads/2020/08/UsingWhereObject.png)
 
+# Future Improvements
+
+- Perform date format validation
+- Investigate if generating a refresh token is possible instead of manually generating a new one after 1 hour
