@@ -16,6 +16,19 @@ Here is an example of what the application registration permissions should look 
 
 ![App registration permissions](https://jeffbrown.tech/wp-content/uploads/2020/08/AzureAppRegistrationPermissions.png)
 
+# Importing the Module
+After downloading the files in this repository, you can import the module for use in a PowerShell console by importing the .PSD1 file:
+
+```powershell
+Import-Module TeamsCloudCommunicationApi.psd1
+```
+
+You can then view the commands available in the module using the **Get-Command** cmdlet:
+
+```powershell
+Get-Command -Module TeamsCloudCommunicationApi
+```
+
 # Graph API Access Tokens
 Part of using the Graph API is authenticating to the service to ensure you or your program can access and execute specific tasks. Includes in this module is a function named **Get-GraphApiAccessToken**. This command takes two inputs: a PSCredential object and the Azure tenant ID. If you don't provide PSCredentials, the function will prompt for it.
 
