@@ -110,13 +110,30 @@ function Get-TeamsPstnCalls {
 
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, HelpMessage="Start date to search for call records in YYYY-MM-DD format")]
+        [Parameter(
+            Mandatory,
+            ParameterSetName="DateRange",
+            HelpMessage="Start date to search for call records in YYYY-MM-DD format"
+        )]
         [string]
         $StartDate,
 
-        [Parameter(Mandatory, HelpMessage="End date to search for call records in YYYY-MM-DD format")]
+        [Parameter(
+            Mandatory,
+            ParameterSetName="DateRange",
+            HelpMessage="End date to search for call records in YYYY-MM-DD format"
+        )]
         [string]
         $EndDate,
+
+        [Parameter(
+            Mandatory,
+            ParameterSetName="NumberDays",
+            HelpMessage="The number of days previous to today to search for call records"
+        )]
+        [ValidateRange(1,90)]
+        [int]
+        $Days,
 
         [Parameter(Mandatory, HelpMessage="Access token string for authorization to make Graph API calls")]
         [string]
@@ -126,7 +143,20 @@ function Get-TeamsPstnCalls {
     $headers = @{
         "Authorization" = $AccessToken
     }
-    $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+
+    if ($PSCmdlet.ParameterSetName = "DateRange") {
+        $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+    }
+    elseif ($PSCmdlet.ParameterSetName = "NumberDays") {
+        $toDateTime = [datetime]::Today.AddDays(1)
+        $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
+
+        $fromDateTime = $toDateTime.AddDays(-$Days)
+        $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
+
+        $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
+    }
+    
     
     while (-not ([string]::IsNullOrEmpty($requestUri))) {
         try {
@@ -183,13 +213,30 @@ function Get-TeamsDirectRoutingCalls {
 
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, HelpMessage="Start date to search for call records in YYYY-MM-DD format")]
+        [Parameter(
+            Mandatory,
+            ParameterSetName="DateRange",
+            HelpMessage="Start date to search for call records in YYYY-MM-DD format"
+        )]
         [string]
         $StartDate,
 
-        [Parameter(Mandatory, HelpMessage="End date to search for call records in YYYY-MM-DD format")]
+        [Parameter(
+            Mandatory,
+            ParameterSetName="DateRange",
+            HelpMessage="End date to search for call records in YYYY-MM-DD format"
+        )]
         [string]
         $EndDate,
+
+        [Parameter(
+            Mandatory,
+            ParameterSetName="NumberDays",
+            HelpMessage="The number of days previous to today to search for call records"
+        )]
+        [ValidateRange(1,90)]
+        [int]
+        $Days,
 
         [Parameter(Mandatory, HelpMessage="Access token string for authorization to make Graph API calls")]
         [string]
@@ -199,7 +246,19 @@ function Get-TeamsDirectRoutingCalls {
     $headers = @{
         "Authorization" = $AccessToken
     }
-    $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+
+    if ($PSCmdlet.ParameterSetName = "DateRange") {
+        $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
+    }
+    elseif ($PSCmdlet.ParameterSetName = "NumberDays") {
+        $toDateTime = [datetime]::Today.AddDays(1)
+        $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
+
+        $fromDateTime = $toDateTime.AddDays(-$Days)
+        $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
+
+        $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
+    }
     
     while (-not ([string]::IsNullOrEmpty($requestUri))) {
         try {
