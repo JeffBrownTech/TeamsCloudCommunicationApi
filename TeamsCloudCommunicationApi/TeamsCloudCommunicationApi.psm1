@@ -144,14 +144,15 @@ function Get-TeamsPstnCalls {
         "Authorization" = $AccessToken
     }
 
-    if ($PSCmdlet.ParameterSetName = "DateRange") {
+    if ($PSCmdlet.ParameterSetName -eq "DateRange") {
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     }
-    elseif ($PSCmdlet.ParameterSetName = "NumberDays") {
+    elseif ($PSCmdlet.ParameterSetName -eq "NumberDays") {
         $toDateTime = [datetime]::Today.AddDays(1)
         $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
 
-        $fromDateTime = $toDateTime.AddDays(-$Days)
+        $adjustedDays = $Days - 1
+        $fromDateTime = $toDateTime.AddDays(-$adjustedDays)
         $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
 
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
@@ -247,19 +248,20 @@ function Get-TeamsDirectRoutingCalls {
         "Authorization" = $AccessToken
     }
 
-    if ($PSCmdlet.ParameterSetName = "DateRange") {
+    if ($PSCmdlet.ParameterSetName -eq "DateRange") {
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     }
-    elseif ($PSCmdlet.ParameterSetName = "NumberDays") {
+    elseif ($PSCmdlet.ParameterSetName -eq "NumberDays") {
         $toDateTime = [datetime]::Today.AddDays(1)
         $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
 
-        $fromDateTime = $toDateTime.AddDays(-$Days)
+        $adjustedDays = $Days - 1
+        $fromDateTime = $toDateTime.AddDays(-$adjustedDays)
         $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
 
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
     }
-    
+
     while (-not ([string]::IsNullOrEmpty($requestUri))) {
         try {
             $requestResponse = Invoke-RestMethod -Method GET -Uri $requestUri -Headers $headers -ErrorAction STOP
