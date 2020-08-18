@@ -12,10 +12,10 @@
 RootModule = 'TeamsCloudCommunicationApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.2.1'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop', 'Core')
 
 # ID used to uniquely identify this module
 GUID = '5ec3936d-fd4a-4775-895e-5187e3f1e5fc'
@@ -99,13 +99,13 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('microsoft-teams', 'graph-api')
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/JeffBrownTech/TeamsCloudCommunicationApi'
 
         # A URL to an icon representing this module.
         # IconUri = ''
