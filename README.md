@@ -5,6 +5,9 @@ PowerShell module that uses Cloud Communications Graph API calls to manage and t
 
 *Disclaimer: Use of this code does not come with any support and is provided 'as-is'. Use at your own risk and review the code and test prior to use in production. This module uses the beta version of the Graph API, which is subject to change without notice from Microsoft.*
 
+# Submitting Issues
+If you run into any issues or errors using this module, please submit an Issue here in GitHub and I will review. If you have an enhancement, submit an issue and label it as an enhancement. I will implement as time allows.
+
 # Getting Started
 This module requires an Azure application registration in order to authenticate against the Graph API. This application registration requires Application permissions of **CallRecords.Read.PstnCalls**. Here is an example of what the application registration permissions should look like:
 
