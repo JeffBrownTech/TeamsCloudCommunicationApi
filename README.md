@@ -84,6 +84,12 @@ Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $acces
 Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $accessToken | ConvertTo-Json
 ```
 
+Instead of using a date range, you can also specify the last number of days records using the *-Days* parameter.
+
+```powershell
+Get-TeamsPstnCalls -Days 7 -AccessToken $accessToken
+```
+
 Allowing the records to display as objects allows for manipulation of the results after retrieving the records. For example, if you are only interested in certain properties of each call record, use the **Select-Object** command to only export those properties:
 
 ```powershell
