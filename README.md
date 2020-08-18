@@ -32,6 +32,12 @@ You can then view the commands available in the module using the **Get-Command**
 Get-Command -Module TeamsCloudCommunicationApi
 ```
 
+The module is available for download through the [PowerShell Gallery](https://www.powershellgallery.com/packages/TeamsCloudCommunicationApi) as well:
+
+```powershell
+Install-Module -Name TeamsCloudCommunicationApi
+```
+
 # Graph API Access Tokens
 Part of using the Graph API is authenticating to the service to ensure you or your program can access and execute specific tasks. Included in this module is a function named **Get-GraphApiAccessToken**. This command takes two inputs: a PSCredential object and the Azure tenant ID. If you don't provide PSCredentials, the function will prompt for them.
 
