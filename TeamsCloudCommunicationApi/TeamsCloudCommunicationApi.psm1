@@ -91,6 +91,9 @@ function Get-TeamsPstnCalls {
         .PARAMETER EndDate
         The end date to search for records in YYYY-MM-DD format.
 
+        .PARAMETER Days
+        The previous number of days to search for records.
+
         .PARAMETER AccessToken
         An access token for authorization to make Graph API requests.
         Recommended to save this value to a variable for resuse.
@@ -98,8 +101,14 @@ function Get-TeamsPstnCalls {
         .EXAMPLE
         Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-03-31 -AccessToken $accessToken
 
-        This example retrieves PSTN usage records between 2020-03-01 and 2020-03-31 use an access toke
+        This example retrieves PSTN usage records between 2020-03-01 and 2020-03-31 use an access token
         saved to the variable $accessToken.
+
+        .EXAMPLE
+        Get-TeamsPstnCalls -Days 7 -AccessToken $accessToken
+
+        This example retrieves PSTN usage records for the previous 7 days using an access token saved
+        to the variable $accessToken.
 
         .LINK
         https://docs.microsoft.com/en-us/graph/api/callrecords-callrecord-getpstncalls
@@ -195,6 +204,9 @@ function Get-TeamsDirectRoutingCalls {
         .PARAMETER EndDate
         The end date to search for records in YYYY-MM-DD format.
 
+        .PARAMETER Days
+        The previous number of days to search for records.
+
         .PARAMETER AccessToken
         An access token for authorization to make Graph API requests.
         Recommended to save this value to a variable for resuse.
@@ -202,8 +214,14 @@ function Get-TeamsDirectRoutingCalls {
         .EXAMPLE
         Get-TeamsDirectRoutingCalls -StartDate 2020-03-01 -EndDate 2020-03-31 -AccessToken $accessToken
 
-        This example retrieves direct routing usage records between 2020-03-01 and 2020-03-31 use an access toke
+        This example retrieves direct routing usage records between 2020-03-01 and 2020-03-31 use an access token
         saved to the variable $accessToken.
+
+        .EXAMPLE
+        Get-TeamsDirectRoutingCalls -Days 7 -AccessToken $accessToken
+
+        This example retrieves direct routing usage records for the previous 7 days using an access token saved
+        to the variable $accessToken.
 
         .LINK
         https://docs.microsoft.com/en-us/graph/api/callrecords-callrecord-getdirectroutingcalls
