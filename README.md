@@ -84,13 +84,13 @@ Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $acces
 Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $accessToken | ConvertTo-Json
 ```
 
-Instead of using a date range, you can also specify the last number of days records using the *-Days* parameter.
+Instead of using a date range, you can specify the last number of days records using the *-Days* parameter. If you specify 1 day, it will return the current day's records based on UTC time. If you specify 2 days, it will return records for the current day plus the day prior. The Microsoft Graph API caps the date range to the previous 90 days worth of records.
 
 ```powershell
 Get-TeamsPstnCalls -Days 7 -AccessToken $accessToken
 ```
 
-Allowing the records to display as objects allows for manipulation of the results after retrieving the records. For example, if you are only interested in certain properties of each call record, use the **Select-Object** command to only export those properties:
+The module displays the records as objects, meaning you can manipulate the results after retrieving the records. For example, if you are only interested in certain properties of each call record, use the **Select-Object** command to only export those properties:
 
 ```powershell
 Get-TeamsPstnCalls -StartDate 2020-03-01 -EndDate 2020-04-01 -AccessToken $accessToken | Select-Object duration, charge, callType, licenseCapability
