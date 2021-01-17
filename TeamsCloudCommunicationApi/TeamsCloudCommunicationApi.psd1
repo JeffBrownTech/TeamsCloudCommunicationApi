@@ -12,7 +12,7 @@
 RootModule = 'TeamsCloudCommunicationApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.2'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
@@ -102,7 +102,7 @@ PrivateData = @{
         Tags = @('microsoft-teams', 'graph-api')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/JeffBrownTech/TeamsCloudCommunicationApi/blob/master/LICENSE'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/JeffBrownTech/TeamsCloudCommunicationApi'
