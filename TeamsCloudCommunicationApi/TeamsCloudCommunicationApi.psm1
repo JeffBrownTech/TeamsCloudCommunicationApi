@@ -157,11 +157,10 @@ function Get-TeamsPstnCalls {
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     }
     elseif ($PSCmdlet.ParameterSetName -eq "NumberDays") {
-        $toDateTime = [datetime]::Today.AddDays(1)
+        $today = [datetime]::Today
+        $toDateTime = $today.AddDays(1)
         $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
-
-        $adjustedDays = $Days - 1
-        $fromDateTime = $toDateTime.AddDays(-$adjustedDays)
+        $fromDateTime = $today.AddDays(-($Days - 1))
         $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
 
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getPstnCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
@@ -270,11 +269,10 @@ function Get-TeamsDirectRoutingCalls {
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$StartDate,toDateTime=$EndDate)"
     }
     elseif ($PSCmdlet.ParameterSetName -eq "NumberDays") {
-        $toDateTime = [datetime]::Today.AddDays(1)
+        $today = [datetime]::Today
+        $toDateTime = $today.AddDays(1)
         $toDateTimeString = Get-Date -Date $toDateTime -Format yyyy-MM-dd
-
-        $adjustedDays = $Days - 1
-        $fromDateTime = $toDateTime.AddDays(-$adjustedDays)
+        $fromDateTime = $today.AddDays(-($Days - 1))
         $fromDateTimeString = Get-Date -Date $fromDateTime -Format yyyy-MM-dd
 
         $requestUri = "https://graph.microsoft.com/beta/communications/callRecords/getDirectRoutingCalls(fromDateTime=$fromDateTimeString,toDateTime=$toDateTimeString)"
